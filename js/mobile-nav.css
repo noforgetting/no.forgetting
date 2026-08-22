@@ -1,0 +1,15 @@
+#dashboardStats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.mobile-menu-button { display: none; }
+
+@media (max-width: 1020px) {
+  .sidebar { position: sticky; top: 0; z-index: 10; display: flex; flex-direction: row; align-items: center; height: 64px; padding: 0 1rem; }
+  .brand { order: 1; }
+  .mobile-menu-button { display: grid; place-items: center; order: 3; width: 34px; height: 34px; margin-left: auto; padding: 7px; color: var(--text); background: transparent; border-color: transparent; box-shadow: none; }
+  .mobile-menu-button:hover { background: #303030; box-shadow: none; }
+  .mobile-menu-button span { display: block; width: 18px; height: 1px; margin: 3px 0; background: currentColor; }
+  .nav-list { position: fixed; inset: 64px 0 0; display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 22px 18px; background: var(--bg); border-top: 1px solid var(--line); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 120ms ease; }
+  .menu-open .nav-list { opacity: 1; visibility: visible; pointer-events: auto; }
+  .nav-list a { justify-content: flex-start; padding: 1rem .75rem; font-size: 1rem; border-bottom: 1px solid var(--line); }
+}
+
+@media (max-width: 720px) { #dashboardStats { grid-template-columns: 1fr; } }

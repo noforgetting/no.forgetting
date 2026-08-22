@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NoForgetting | Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="NoForgettinglogo.png">
+  <link rel="apple-touch-icon" href="NoForgettinglogo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><img class="brand-mark" src="NoForgettinglogo.png" alt="NoForgetting">
+        <div>
+          <h1>NoForgetting</h1>
+        </div>
+      </div>
+      <nav class="nav-list"><a href="index.html" data-nav-page="index.html">Dashboard</a><a href="assignments.html"
+          data-nav-page="assignments.html">Assignments</a><a href="tests.html" data-nav-page="tests.html">Tests</a><a
+          href="reminders.html" data-nav-page="reminders.html">Reminders</a></nav>
+    </aside>
+    <main class="main-content">
+      <header class="page-header page-header--compact">
+        <div>
+          <p class="eyebrow" id="todayText" style="color: white;">Today</p>
+        </div>
+      </header>
+      <section class="stats-grid" id="dashboardStats">
+        <article class="stat-card"><span>Upcoming assignments</span><strong id="totalTasksStat">0</strong></article>
+        <article class="stat-card"><span>Upcoming tests</span><strong id="upcomingExamsStat">0</strong></article>
+        <article class="stat-card"><span>Personal reminders</span><strong id="personalRemindersStat">0</strong></article>
+        <article class="stat-card"><span>Completed</span><strong id="completedTasksStat">0</strong></article>
+      </section>
+      <section class="dashboard-grid">
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>Upcoming assignments</h3>
+            </div>
+          </div>
+          <div class="list" id="dashboardAssignments"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>Upcoming tests</h3>
+            </div>
+          </div>
+          <div class="list" id="dashboardTests"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>Personal reminders</h3>
+            </div>
+          </div>
+          <div class="list" id="dashboardReminders"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+
+</html>

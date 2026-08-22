@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NoForgetting | Assignments</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="NoForgettinglogo.png">
+  <link rel="apple-touch-icon" href="NoForgettinglogo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+<body class="content-page">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><img class="brand-mark" src="NoForgettinglogo.png" alt="NoForgetting">
+        <div>
+          <h1>NoForgetting</h1>
+        </div>
+      </div>
+      <nav class="nav-list"><a href="index.html" data-nav-page="index.html">Dashboard</a><a href="assignments.html"
+          data-nav-page="assignments.html">Assignments</a><a href="tests.html" data-nav-page="tests.html">Tests</a><a
+          href="reminders.html" data-nav-page="reminders.html">Reminders</a></nav>
+    </aside>
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <h2>Assignments</h2>
+        </div>
+      </header>
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h3>Add assignment</h3>
+          </div>
+        </div>
+        <form class="stacked-form" id="assignmentForm"><label>Lesson name<input type="text" id="assignmentLesson"
+              placeholder="Math"></label><label>Assignment <span class="optional-label">Optional</span><input
+              type="text" id="assignmentTitle" placeholder="L. 2.3 Homework"></label><label>Due date<input type="date"
+              id="assignmentDate"></label><label>Due time <span class="optional-label">Optional</span><input type="time"
+              id="assignmentTime"></label><button type="submit">Add</button></form>
+      </section>
+      <section class="panel">
+        <div class="toolbar"><input type="search" id="assignmentSearch" placeholder="Search assignments..."><select
+            id="assignmentFilter">
+            <option value="all">All tasks</option>
+            <option value="active">Remaining</option>
+            <option value="completed">Completed</option>
+            <option value="overdue">Overdue</option>
+          </select></div>
+        <div class="list" id="assignmentList"></div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="js/assignments.js"></script>
+</body>
+
+</html>
