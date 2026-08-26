@@ -17,6 +17,11 @@ export async function getFirebaseServices() {
       const app = appSdk.initializeApp(firebaseConfig);
       if (appCheckSiteKey) appCheckSdk.initializeAppCheck(app, { provider: new appCheckSdk.ReCaptchaV3Provider(appCheckSiteKey), isTokenAutoRefreshEnabled: true });
       return { auth: authSdk.getAuth(app), db: firestoreSdk.getFirestore(app), authSdk, firestoreSdk };
+    }).catch((error) => {
+      // A cold offline launch cannot download CDN modules. Allow a fresh retry
+      // as soon as the browser reconnects instead of keeping a rejected promise.
+      servicesPromise = undefined;
+      throw error;
     });
   }
   return servicesPromise;

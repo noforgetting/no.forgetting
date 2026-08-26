@@ -4,12 +4,16 @@ import { getFirebaseServices, isFirebaseConfigured } from "./firebase.js";
 let currentUser = null;
 let stopListening = null;
 let saveTimer = null;
+let authListenerStarted = false;
+let connectivityListenersStarted = false;
 const SYNC_PENDING_KEY = "NoForgettingSyncPending";
+const LAST_SYNC_USER_KEY = "NoForgettingLastSyncUser";
 const statusEvent = (state, message = "") => window.dispatchEvent(new CustomEvent("noforgetting:sync-status", { detail: { state, message, user: currentUser } }));
 const userDocument = (firestoreSdk, db, uid) => firestoreSdk.doc(db, "users", uid, "appData", "current");
 const hasPendingChanges = () => localStorage.getItem(SYNC_PENDING_KEY) === "true";
 const markPending = () => localStorage.setItem(SYNC_PENDING_KEY, "true");
 const clearPending = () => localStorage.removeItem(SYNC_PENDING_KEY);
+const hasKnownSyncUser = () => Boolean(currentUser || localStorage.getItem(LAST_SYNC_USER_KEY));
 
 async function pushLatest() {
   if (!currentUser || !hasPendingChanges()) return;
@@ -29,8 +33,12 @@ async function pushLatest() {
 }
 
 export function queueSync() {
-  if (!currentUser) return;
+  if (!hasKnownSyncUser()) return;
   markPending();
+  if (!currentUser) {
+    statusEvent("offline", "Offline, changes will sync when you reconnect");
+    return;
+  }
   if (!navigator.onLine) {
     statusEvent("offline", "Offline, changes will sync when you reconnect");
     return;
@@ -42,11 +50,30 @@ export function queueSync() {
 
 export async function initSync() {
   if (!isFirebaseConfigured()) { statusEvent("local", "Local-only mode"); return; }
+  if (!connectivityListenersStarted) {
+    connectivityListenersStarted = true;
+    window.addEventListener("online", () => {
+      initSync().then(() => {
+        if (currentUser && hasPendingChanges()) queueSync();
+      }).catch(() => undefined);
+    });
+    window.addEventListener("offline", () => {
+      if (hasKnownSyncUser() && hasPendingChanges()) statusEvent("offline", "Offline, changes will sync when you reconnect");
+    });
+  }
   const { auth, authSdk } = await getFirebaseServices();
+  if (authListenerStarted) return;
+  authListenerStarted = true;
   authSdk.onAuthStateChanged(auth, (user) => {
     currentUser = user;
     stopListening?.(); stopListening = null;
-    if (!user) { statusEvent("local", "Local-only mode"); return; }
+    if (!user) {
+      localStorage.removeItem(LAST_SYNC_USER_KEY);
+      clearPending();
+      statusEvent("local", "Local-only mode");
+      return;
+    }
+    localStorage.setItem(LAST_SYNC_USER_KEY, user.uid);
     statusEvent("syncing", "Loading your synced reminders…");
     getFirebaseServices().then(({ db, firestoreSdk }) => {
       const ref = userDocument(firestoreSdk, db, user.uid);
@@ -58,12 +85,6 @@ export async function initSync() {
         else queueSync();
       }, () => statusEvent("error", "Sync is unavailable; local changes are safe."));
     });
-  });
-  window.addEventListener("online", () => {
-    if (currentUser && hasPendingChanges()) queueSync();
-  });
-  window.addEventListener("offline", () => {
-    if (currentUser && hasPendingChanges()) statusEvent("offline", "Offline, changes will sync when you reconnect");
   });
 }
 
