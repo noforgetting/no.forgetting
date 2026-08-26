@@ -7,9 +7,17 @@
   .mobile-menu-button { display: grid; place-items: center; order: 3; width: 34px; height: 34px; margin-left: auto; padding: 7px; color: var(--text); background: transparent; border-color: transparent; box-shadow: none; }
   .mobile-menu-button:hover { background: #303030; box-shadow: none; }
   .mobile-menu-button span { display: block; width: 18px; height: 1px; margin: 3px 0; background: currentColor; }
-  .nav-list { position: fixed; inset: 64px 0 0; display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 22px 18px; background: var(--bg); border-top: 1px solid var(--line); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 120ms ease; }
+  .nav-list { position: fixed; inset: 64px 0 0; display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 22px 18px 205px; background: var(--bg); border-top: 1px solid var(--line); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 120ms ease; overflow-y: auto; }
   .menu-open .nav-list { opacity: 1; visibility: visible; pointer-events: auto; }
   .nav-list a { justify-content: flex-start; padding: 1rem .75rem; font-size: 1rem; border-bottom: 1px solid var(--line); }
+  .account-panel { position: fixed; right: 18px; bottom: 18px; left: 18px; z-index: 11; margin: 0; padding: 1rem; background: #252525; border: 1px solid #404040; border-radius: 12px; box-shadow: 0 16px 38px rgba(0, 0, 0, .34); opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(10px); transition: opacity 120ms ease, transform 120ms ease, visibility 120ms ease; }
+  .menu-open .account-panel { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+  .account-copy { display: block; }
+  .account-title { display: block; font-size: .94rem; }
+  .account-description { display: block; margin: .38rem 0 .8rem; color: var(--muted); font-size: .81rem; line-height: 1.42; }
+  .account-status { display: block; margin-bottom: .65rem; }
+  .account-panel .account-open { width: 100%; padding: .62rem; }
+  .mobile-menu-button { margin-left: auto; }
 }
 
 @media (max-width: 720px) { #dashboardStats { grid-template-columns: 1fr; } }

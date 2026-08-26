@@ -30,6 +30,10 @@ export function initNavbar() {
     const open = document.body.classList.toggle("menu-open");
     menuButton.setAttribute("aria-expanded", String(open));
   });
+  document.querySelectorAll(".nav-list a").forEach((link) => link.addEventListener("click", () => {
+    document.body.classList.remove("menu-open");
+    menuButton?.setAttribute("aria-expanded", "false");
+  }));
 
   if (!window.NoForgettingDeleteDialogReady) {
     window.NoForgettingDeleteDialogReady = true;

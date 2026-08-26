@@ -35,7 +35,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -86,7 +87,8 @@ button.ghost:hover {
 }
 
 input,
-select {
+select,
+textarea {
   height: 44px;
   min-width: 0;
   width: 100%;
@@ -108,9 +110,16 @@ input[type="time"] {
 }
 
 input:focus,
-select:focus {
-  border-color: #2783DE;
-  box-shadow: 0 0 0 2px rgba(39, 131, 222, .18);
+select:focus,
+textarea:focus {
+  border-color: #70706d;
+  box-shadow: none;
+}
+
+button:focus-visible {
+  outline: 2px solid #70706d;
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 label {
@@ -772,21 +781,21 @@ button.reminder-check-button.is-completing:hover {
   border-top: 1px solid var(--line);
 }
 
+.account-copy { display: block; margin-bottom: .75rem; }
+.account-title { display: block; font-size: .92rem; }
+.account-description { margin: .36rem 0 0; color: var(--muted); font-size: .8rem; line-height: 1.45; }
 .account-status { margin: 0 0 .55rem; color: var(--muted); font-size: .82rem; }
 .account-panel.is-error .account-status, .account-error { color: #e87171; }
 .account-panel .account-open { width: 100%; }
-.account-dialog { width: min(92vw, 410px); padding: 0; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.account-dialog { width: min(92vw, 410px); padding: 0; color: var(--text); background: #242424; border: 1px solid #454545; border-radius: 14px; box-shadow: 0 24px 70px rgba(0, 0, 0, .62); }
 .account-dialog::backdrop { background: rgba(0, 0, 0, .62); }
-.account-form { position: relative; display: grid; gap: 1rem; padding: 1.5rem; }
+.account-form { position: relative; display: grid; gap: 1rem; padding: 1.65rem; background: #242424; border-radius: inherit; }
 .account-form h2, .account-form p { margin: 0; }
 .account-form > p { color: var(--muted); font-size: .9rem; line-height: 1.5; }
 .account-form label { display: grid; gap: .4rem; font-size: .9rem; }
 .account-form > div { display: flex; justify-content: flex-end; gap: .6rem; }
-.account-close { position: absolute; top: .65rem; right: .65rem; min-width: 32px; padding: .2rem .5rem; font-size: 1.25rem; line-height: 1; background: transparent; border: 0; box-shadow: none; }
+.account-kicker { color: var(--accent) !important; font-size: .7rem !important; font-weight: 700; letter-spacing: .1em; }
 
 @media (max-width: 1020px) {
-  .account-panel { order: 2; margin: 0 0 0 auto; padding: 0; border: 0; }
-  .account-status { display: none; }
-  .account-panel .account-open { width: auto; padding: .42rem .58rem; font-size: .78rem; }
-  .mobile-menu-button { margin-left: .35rem; }
+  .account-panel { border: 0; }
 }

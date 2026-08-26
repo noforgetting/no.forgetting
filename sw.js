@@ -1,5 +1,5 @@
 // Change this value whenever you release files that should replace the old offline copy.
-const CACHE_NAME = "noforgetting-offline-v2";
+const CACHE_NAME = "noforgetting-offline-v8";
 const APP_FILES = [
   "",
   "index.html",
