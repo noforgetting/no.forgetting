@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Each account can access exactly one document: its own app data.
+    match /users/{userId}/appData/current {
+      allow read: if signedInAs(userId);
+      allow create, update: if signedInAs(userId) && validAppData();
+      allow delete: if false;
+    }
+
+    function signedInAs(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    function validAppData() {
+      return request.resource.data.keys().hasOnly(['data', 'updatedAt'])
+        && request.resource.data.keys().hasAll(['data', 'updatedAt'])
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.data is map
+        && request.resource.data.data.keys().hasOnly([
+          'assignments', 'tests', 'personalReminders', 'totalStudySeconds',
+          'dailyStudySeconds', 'streak'
+        ])
+        && request.resource.data.data.keys().hasAll([
+          'assignments', 'tests', 'personalReminders', 'totalStudySeconds',
+          'dailyStudySeconds', 'streak'
+        ])
+        && request.resource.data.data.assignments is list
+        && request.resource.data.data.assignments.size() <= 500
+        && request.resource.data.data.tests is list
+        && request.resource.data.data.tests.size() <= 500
+        && request.resource.data.data.personalReminders is list
+        && request.resource.data.data.personalReminders.size() <= 500
+        && request.resource.data.data.totalStudySeconds is number
+        && request.resource.data.data.dailyStudySeconds is map
+        && request.resource.data.data.streak is map;
+    }
+  }
+}
