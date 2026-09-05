@@ -17,7 +17,7 @@ function render() {
     const overdue = hasDate && isOverdue(reminder);
     const days = hasDate ? getDaysRemaining(reminder.date) : null;
     const label = reminder.completed ? "Done" : overdue ? "Overdue" : days === null ? "No date" : days === 0 ? "Today" : `${days} days left`;
-    const style = reminder.completed ? "success" : overdue ? "danger" : days === 1 ? "danger" : days !== null && days <= 3 ? "warning" : "success";
+    const style = reminder.completed ? "success" : overdue ? "danger" : days !== null && days <= 1 ? "danger" : days !== null && days <= 3 ? "warning" : "success";
 
     return `<div class="list-item ${reminder.completed ? "completed" : ""} ${overdue ? "overdue" : ""}"><div><p class="item-title">${escapeHTML(reminder.title)} <span class="badge badge--type">${escapeHTML(reminder.type)}</span> <span class="badge ${style}">${label}</span></p><p class="item-meta">${hasDate ? formatDate(reminder.date) : "No date"}</p></div><div class="item-actions"><button class="secondary" data-toggle="${reminder.id}">${reminder.completed ? "Undo" : "Done"}</button><button class="ghost" data-delete="${reminder.id}">Delete</button></div></div>`;
   }).join("") : `<div class="empty-state">No personal reminders yet</div>`;
