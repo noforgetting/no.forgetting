@@ -199,7 +199,7 @@ label {
   gap: .7rem;
   border-radius: 5px;
   padding: .56rem .65rem;
-  color: #b0b0ad;
+  color: #ffffff;
   font-size: .9rem;
   text-decoration: none;
   transition: color 150ms ease, background 150ms ease;
@@ -209,7 +209,7 @@ label {
   width: 19px;
   height: 19px;
   flex: 0 0 19px;
-  color: #777;
+  color: #ffffff;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
