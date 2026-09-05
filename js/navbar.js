@@ -42,6 +42,7 @@ export function initNavbar() {
     dialog.innerHTML = `<div role="dialog" aria-modal="true" aria-labelledby="deleteDialogTitle" style="position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;background:rgba(0,0,0,.58)"><div style="width:min(100%,380px);padding:22px;background:#242424;border:1px solid #3b3b3b;border-radius:8px;box-shadow:0 18px 50px rgba(0,0,0,.4)"><h2 id="deleteDialogTitle" style="margin:0;color:#e7e7e5;font-size:1.1rem">Delete this reminder?</h2><p style="margin:9px 0 20px;color:#a3a3a0;font-size:.9rem;line-height:1.5">This action cannot be reverted!!</p><div style="display:flex;justify-content:flex-end;gap:8px"><button type="button" data-cancel-delete style="color:#e7e7e5;background:#303030;border-color:#424242">Cancel</button><button type="button" data-confirm-delete>Delete</button></div></div></div>`;
     document.body.append(dialog);
     const overlay = dialog.firstElementChild;
+    const dialogTitle = dialog.querySelector("#deleteDialogTitle");
     let pendingButton = null;
     const close = () => { overlay.style.display = "none"; pendingButton = null; };
     dialog.querySelector("[data-cancel-delete]").addEventListener("click", close);
@@ -63,6 +64,7 @@ export function initNavbar() {
       event.preventDefault();
       event.stopImmediatePropagation();
       pendingButton = button;
+      dialogTitle.textContent = button.dataset.deleteTitle || "Delete this reminder?";
       overlay.style.display = "grid";
     }, true);
   }

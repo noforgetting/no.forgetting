@@ -6,6 +6,7 @@ const title = document.getElementById("personalReminderTitle");
 const type = document.getElementById("personalReminderType");
 const date = document.getElementById("personalReminderDate");
 const list = document.getElementById("personalReminderList");
+const deleteDone = document.getElementById("deleteDonePersonalReminders");
 let data = loadData();
 window.addEventListener("noforgetting:data-changed", () => { data = loadData(); render(); });
 
@@ -30,7 +31,7 @@ function render() {
     };
   });
 
-  document.querySelectorAll("[data-delete]").forEach((button) => {
+  document.querySelectorAll("[data-delete]:not([data-delete-bulk])").forEach((button) => {
     button.onclick = () => {
       if (confirm("Delete this reminder?")) {
         data.personalReminders = data.personalReminders.filter((reminder) => reminder.id !== button.dataset.delete);
@@ -48,6 +49,14 @@ form.onsubmit = (event) => {
   saveData(data);
   form.reset();
   render();
+};
+
+deleteDone.onclick = () => {
+  if (confirm("Delete all completed reminders?")) {
+    data.personalReminders = data.personalReminders.filter((reminder) => !reminder.completed);
+    saveData(data);
+    render();
+  }
 };
 
 initNavbar();

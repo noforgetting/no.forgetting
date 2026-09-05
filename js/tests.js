@@ -6,6 +6,7 @@ const lesson = document.getElementById("testLesson");
 const description = document.getElementById("testDescription");
 const date = document.getElementById("testDate");
 const list = document.getElementById("testList");
+const deleteDone = document.getElementById("deleteDoneTests");
 let data = loadData();
 window.addEventListener("noforgetting:data-changed", () => { data = loadData(); render(); });
 
@@ -29,7 +30,7 @@ function render() {
     };
   });
 
-  document.querySelectorAll("[data-delete]").forEach((button) => {
+  document.querySelectorAll("[data-delete]:not([data-delete-bulk])").forEach((button) => {
     button.onclick = () => {
       if (confirm("Delete this test?")) {
         data.tests = data.tests.filter((test) => test.id !== button.dataset.delete);
@@ -47,6 +48,14 @@ form.onsubmit = (event) => {
   saveData(data);
   form.reset();
   render();
+};
+
+deleteDone.onclick = () => {
+  if (confirm("Delete all completed tests?")) {
+    data.tests = data.tests.filter((test) => !test.completed);
+    saveData(data);
+    render();
+  }
 };
 
 initNavbar();

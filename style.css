@@ -86,6 +86,22 @@ button.ghost:hover {
   box-shadow: none;
 }
 
+.delete-done-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.delete-done-button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
 input,
 select,
 textarea {
@@ -795,6 +811,54 @@ button.reminder-check-button.is-completing:hover {
 .account-form label { display: grid; gap: .4rem; font-size: .9rem; }
 .account-form > div { display: flex; justify-content: flex-end; gap: .6rem; }
 .account-kicker { color: var(--accent) !important; font-size: .7rem !important; font-weight: 700; letter-spacing: .1em; }
+
+.sync-overlay {
+  width: min(calc(100vw - 2rem), 430px);
+  margin: auto;
+  padding: 0;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid #454545;
+  border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .62);
+}
+
+.sync-overlay::backdrop {
+  background: rgba(0, 0, 0, .56);
+  backdrop-filter: blur(5px);
+}
+
+.sync-overlay__content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  padding: 1.4rem;
+}
+
+.sync-overlay__spinner {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-top: .15rem;
+  border: 3px solid rgba(39, 131, 222, .22);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: sync-spin .8s linear infinite;
+}
+
+.sync-overlay h2 { margin: 0; font-size: 1.08rem; }
+.sync-overlay__message { margin: .42rem 0 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+.sync-overlay__cancel { grid-column: 1 / -1; width: 100%; margin-top: .2rem; }
+
+@keyframes sync-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 420px) {
+  .sync-overlay__content { grid-template-columns: 1fr; }
+  .sync-overlay__spinner { margin: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sync-overlay__spinner { animation-duration: 2s; }
+}
 
 @media (max-width: 1020px) {
   .account-panel { border: 0; }
