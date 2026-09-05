@@ -15,7 +15,7 @@ function timeLabel(date) {
 function statusClass(date) {
   if (!date) return "";
   const days = getDaysRemaining(date);
-  return days < 0 || days === 1 ? "danger" : days <= 3 ? "warning" : "success";
+  return days <= 1 ? "danger" : days <= 3 ? "warning" : "success";
 }
 
 function widget(targetId, items, title, detail, collection) {
